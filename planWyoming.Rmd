@@ -1,0 +1,49 @@
+---
+title: "Wyoming Project Plan"
+author: "Randy Swaty"
+date: "8/10/2020"
+output:
+  tufte::tufte_html: default
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+---
+
+## This document
+Will serve to outline a workplan for TNC volunteer Cassidy Downing and TNC LANDFIRE Ecologist Randy Swaty.
+
+The supporting team will include:
+
+* Trey Davis, Stewardship manager for Wyoming Chapter
+* Rachel Meier, Research Associate, Lotus Engineering and Sustainability
+
+## Overarching Goal and deliverables
+Assist TNC identify and map priority fire adapted areas within the Ten Sleep, WY project area for resilience management.  More specifically, we will (by the end of the fall 2020 semester):
+ 
+* Process (crop/mask) LANDFIRE data
+
+    * US_200BPS (Biophysical Settings)
+    * US_200EVT (Existing Vegetation Type)
+    * US_200EVC (Existing Vegetation Cover)
+    * US_200EVH (Existing Vegetation Height)
+    * US_140VDEP (Vegetation Departure)
+    * US_140SCLASS (Succession Classes)
+    * US_140MFRI (Mean Fire Return Interval)
+*  Provide summary tables and charts of those datasets
+*  Explore "value added" delivery and/or analysis (e.g., dashboard and/or combined datasets)
+
+
+## Methods
+
+Cassidy, Rachel and Randy will work in open sourced tools as much as possible.  Randy  will support with ArcGIS as needed.  
+
+## Additionally
+Cassidy will draft a short blog post, participate in lab meetings as possible and reach out for help ASAP. 
+
+    
+## Our commitment to Cassidy
+We are committed to a successful completion of this project, providing career advancement opportunities (e.g., introductions to people in conservation), and an opportunity to present her work.  
+
+
+ 
+

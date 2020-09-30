@@ -1,0 +1,129 @@
+---
+title: "Notes for Cassidy"
+subtitle: "Getting started with all of this data"
+author: "Randy"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_html: default
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+---
+
+
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+# This Document...
+is intended to get you started with all of this LANDFIRE data and its use for conservation strategery.  It was created in R-Studio like: file > new > r-markdown > from template > Tufte handout.  I could have chosen Chinese :).
+
+
+```{marginfigure}
+Edward Tufte is a statistician and is noted for his writings on information design and as a pioneer in the field of data visualization
+```
+
+# High level questions and outline
+At the most broad level conservation organizations that are working on large terrestrial-based projects need to understand:
+
+1. how much of each ecosystem they have, and once had
+2. how those ecosystems function "naturally"
+3. how things are different today from what they once were.
+
+This is all just the beginning of what a conservationist looks at to decide what to do where, but is fundamental.  We also recognize that "historical does not always = desired future", meaning that while we want to understand how ecosystems historically looked and worked, we may or may not use that to define what we are aiming for.  Most likely that information will inform, but not define our "desired future condition".
+
+```{marginfigure}
+*p.s.,* We also need to know where we are working (among many other things)!  Sounds super basic, but defining the extent of our analysis and conservation action is not always easy, or clearcut.  
+
+```
+
+
+
+```{r wyAoiMap, echo=FALSE, fig.cap="The Area of Interest (AoI) for our Wyoming project.  Subject to change!", message=FALSE, warning=FALSE, cache=TRUE}
+knitr::include_graphics("wyAoi.jpg")
+```
+
+# What we will do
+In general we will use whatever tools and data we can get our hands on to address the 3 points above for the area of interest.  More specifically we will:
+```{marginfigure}
+Current = roughly 2016 and is based on the most recent LANDFIRE data
+```
+
+1. Provide charts, maps, and tables of:
+
+    * amounts of the most prominent ecosystems historically and today 
+    * current canopy cover
+    * current canopy height
+    * historical fire regimes
+    
+
+2. Do GIS work to get at concepts such as:
+    * canopy cover by ecosystem type
+    * amount of conversion of historical ecosystems to agricultural, urban or other ecosystems
+    * amount of various ecosystems in highly connected areas
+
+    
+```{r evc, echo=FALSE, fig.cap="Example chart depicting canopy cover by dominant ecosystem for the Hiawatha National Forest, MI.  Most of the Northern Hardwoods has canopy cover in the 70-80% range,", message=FALSE, warning=FALSE, cache=TRUE}
+knitr::include_graphics("evc_evt5.png")
+```
+
+3. Deliver charts, maps and tables as mentioned above, plus inputs and code as requested.  We will also deliver outputs in a format requested, such as a dashboard and/or interactive report.
+
+
+# Overview of inputs and methods
+
+For the most part we will use LANDFIRE data.
+
+## This thing called LANDFIRE
+LANDFIRE is your tax dollars at work creating datasets that characterize vegetation, fire and fuels characteristics for the entire country including insular islands.   There are over 2 dozen spatial datasets, plus 900+ ecological models and real live people to talk to about all of this stuff, including me.  Learn more at [www.landfire.gov](www.landfire.gov).  
+
+There are a painful number of oddities about almost all datasets, especially with one as large as LANDFIRE's.  One thing is that *some* datasets were developed and are delivered per "Map Zone".  Another maddening thing is the terminology.  For example, historical ecosystems are called ["Biophysical Settings"](https://www.landfire.gov/bps.php) (BpS) .  This dataset is one that is delivered by MapZone.  You will learn the "intricacies" of this soon enough young grasshopper.  In the meantime explore the Map Zone map below. 
+
+
+```{r fig-main, echo=FALSE, fig.cap="Zoom in/out, pan and click around to explore Map Zones.", message=FALSE, warning=FALSE, cache=TRUE}
+htmltools::tags$iframe(title = "My embedded document", src = "leafletSIM2carto.html", frameborder = "0", width = "60%", height="400")
+```
+
+## The LANDFIRE datasets we'll start with include:
+
+I included the LANDFIRE datasets that I thought we might need for the Central Apps work.  One important note-they are for the lower 48 states so are large!  They each have labels for more than 9 billion 30 x 30m pixels!  Pixels  you say?  That means this is "raster" data see [this explanation](https://desktop.arcgis.com/en/arcmap/latest/manage-data/raster-and-images/what-is-raster-data.htm) for more info.
+
+```{r ottBpS, echo=FALSE, fig.cap="Biophysical Settings for the Ottawa NF in the western UP", fig.height=3.5, fig.margin=TRUE, fig.width=3.5, message=FALSE, warning=FALSE, cache=TRUE}
+knitr::include_graphics("BpS_QGIS2.jpg")
+```
+
+* Biophysical Settings: LANDFIRE's (LF) Biophysical Settings (BPS) represents the vegetation that may have been dominant on the landscape prior to Euro-American settlement and is based on both the current biophysical environment and an approximation of the historical disturbance regime.  https://www.landfire.gov/bps.php
+* Mean Fire Return Interval: The Mean Fire Return Interval (MFRI) layer quantifies the average period between fires under the presumed historical fire regime. MFRI is intended to describe one component of historical fire regime characteristics in the context of the broader historical time period represented by the LANDFIRE (LF) Biophysical Settings (BPS) layer and BPS Model documentation. https://www.landfire.gov/mfri.php
+* Existing Vegetation Cover: LANDFIRE's (LF) Existing Vegetation Cover (EVC) represents the vertically projected percent cover of the live canopy layer for a 30-m cell. https://www.landfire.gov/evc.php
+* Existing Vegetation Height: LANDFIRE's (LF) Existing Vegetation Height (EVH) represents the average height of the dominant vegetation for a 30-m cell. https://www.landfire.gov/evh.php
+* Existing Vegetation Type: LANDFIRE's (LF) Existing Vegetation Type (EVT) represents the current distribution of the terrestrial ecological systems classification, developed by NatureServe for the western hemisphere, through 2016. A terrestrial ecological system is defined as a group of plant community types (associations) that tend to co-occur within landscapes with similar ecological processes, substrates, and/or environmental gradients. https://www.landfire.gov/evt.php
+
+The "historical" datasets represent conditions just prior to European settlement, and the "Existing" datasets represent conditions as of ~2016 (as of August 2020.  They are updated.)
+
+## Other data
+
+```{marginfigure}
+The Connected and Resilient Landscapes datasets are driving much of TNC's work in the United States.
+```
+
+The Nature Conservancy has a suite of datasets called ["Connected and Resilient Landscapes"](https://www.conservationgateway.org/ConservationByGeography/NorthAmerica/UnitedStates/edc/reportsdata/terrestrial/resilience/Pages/default.aspx).  These datasets attempt to depict areas that are most likely support biodiversity in a changing climate (Resiliency) and pathways for relocation (Connectivity).  
+
+## Methods
+As mentioned above we'll use whatever tools we have to do our work.  The exact process will most likely evolve as questions and issues emerge.  One likely work flow would be:
+
+
+```{marginfigure}
+"Process" here means to "clip" the large datasets down to the area of interest.  More specifically, we will us a shapefile of the area of interest as a "cookie cutter" to isolate and "keep" the pixels we want form the input datasets (e.g., LANDFIRE Existing Vegetation Cover).
+```
+
+
+1. Download/share datasets (Randy has many on hand, will share via Box or external hard drive)
+2. Us R code developed by Myles Walimaa to (quickly we hope) process LANDFIRE data and create summary charts 
+3. Make maps in ArcGIS or QGIS 
+4. Explore outputs created up to this point, discuss process for addressing questions
+
+
