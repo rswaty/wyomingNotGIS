@@ -1,0 +1,10 @@
+Succession Class,Reference Percent,Current Percent,Least of Pairs (SIM)
+A,10,2,2
+B,15,37,15
+C,25,16,16
+D,20,9,9
+E,30,10,10
+UN,0,26,0
+SUMS,100,100,52
+,,,
+,,VDEP = 100-Sum of SIM = ,48
