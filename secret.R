@@ -1,5 +1,14 @@
 
+
+# get current data formatted for joining to reference condition data
+
 library(dplyr)
+library(readr)
+
+# read in combine data that has all of the current data from the ArcGIS combine of LANDFIRE Existing Vegetation Cover/Height/Type plus succession classes (a.k.a. seral states) and Biophysical Settings (historical ecosystems)
+
+combine200s <- read_csv("rawData/combine200s.csv")
+View(combine200s)
 
 BpSscl <- combine200s %>%
   group_by(BPS_MODEL, LABEL) %>%
@@ -9,7 +18,13 @@ BpSscl <- combine200s %>%
 
 options(scipen = 999)       
 
-wpercents <- group_by(BpSscl, BPS_MODEL) %>% 
+current <- group_by(BpSscl, BPS_MODEL) %>% 
               mutate(percent = (count/sum(count))*100)
 
-write.csv(wpercents, file = "testPercents.csv")
+# cleanup columns-rename and drop
+names(current)[names(current) == "percent"] <- "curPercent"
+
+current <- subset(current, select = -c(count))
+
+
+#write.csv(current, file = "current.csv")
